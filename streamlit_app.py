@@ -56,7 +56,8 @@ def fetch_data():
 all_data = fetch_data()
 
 # Extract unique attributes for filtering
-genders = sorted(set(perfume.get('gender', 'Unisex') for perfume in all_data))
+# genders = sorted(set(perfume.get('gender', 'Unisex') for perfume in all_data))
+genders = set({"Male" , "Female", "Diverse"})
 scent_directions = sorted(set(perfume.get('scent_direction', 'Unknown') for perfume in all_data))
 seasons = sorted(set(perfume.get('season', 'All Year') for perfume in all_data))
 occasions = sorted(set(perfume.get('occasion', 'Everyday') for perfume in all_data))
