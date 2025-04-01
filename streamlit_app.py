@@ -9,15 +9,13 @@ def set_background():
         """
         <style>
         .stApp {
-            background-image: url('https://images.pexels.com/photos/1666335/pexels-photo-1666335.jpeg');
-            background-size: cover;
-            background-attachment: fixed;
-            color: white;
+            background-color: white;
+            color: black;
             font-family: 'Arial', sans-serif;
         }
         .sidebar .sidebar-content {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
+            background-color: #f0f0f0;
+            color: black;
         }
         .stButton>button {
             background-color: #ff4b4b;
@@ -28,12 +26,13 @@ def set_background():
             background-color: #e60000;
         }
         .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-            color: #FFD700;
+            color: #333333;
         }
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
 # Data fetching
 def fetch_data():
