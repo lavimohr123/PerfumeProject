@@ -79,7 +79,7 @@ def filter_perfumes(data, filters):
            (filters['price'] == 'All' or perfume.get('price') == filters['price'])
     ]
 
-# resultws
+# results
 def display_results(filtered_data):
     st.markdown("### Matching Perfumes")
     st.write(f"Found {len(filtered_data)} perfumes matching criteria:")
