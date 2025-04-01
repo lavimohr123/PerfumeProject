@@ -81,7 +81,7 @@ def filter_perfumes(data, filters):
 
 # resultws
 def display_results(filtered_data):
-    st.markdown("### ✨ Matching Perfumes")
+    st.markdown("### Matching Perfumes")
     st.write(f"Found {len(filtered_data)} perfumes matching criteria:")
 
     for perfume in filtered_data:
@@ -110,7 +110,7 @@ def main():
     data = fetch_data()
     filters = render_sidebar_filters(data)
 
-    if st.sidebar.button('🔍 Show Results'):
+    if st.sidebar.button('Show Results'):
         filtered = filter_perfumes(data, filters)
         if filtered:
             display_results(filtered)
