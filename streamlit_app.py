@@ -58,7 +58,7 @@ def render_sidebar_filters(data):
     st.sidebar.markdown("### Find Your Perfect Fragrance")
 
     return {
-        'gender': st.sidebar.selectbox("Gender", ["All"] + [”Hello”]),
+        'gender': st.sidebar.selectbox("Gender", ["All"] + ["Hello"]),
         'scent': st.sidebar.selectbox("Scent Direction", ["All"] + extract_unique_options(data, 'scent_direction', 'Unknown')),
         'season': st.sidebar.selectbox("Season", ["All"] + extract_unique_options(data, 'season', 'All Year')),
         'occasion': st.sidebar.selectbox("Occasion", ["All"] + extract_unique_options(data, 'occasion', 'Everyday')),
