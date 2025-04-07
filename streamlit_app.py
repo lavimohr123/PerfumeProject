@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 import altair as alt
+import openpyxl
 
 # UI
 def set_background():
@@ -33,24 +34,8 @@ def set_background():
         unsafe_allow_html=True
     )
 
-
-# Data fetching
-def fetch_data():
-    url = "https://fragrancefinder-api.p.rapidapi.com/dupes/66c70dee71fb63515fcfa1bf"
-    headers = {
-        "X-RapidAPI-Key": "99f01dd00dmshf9ecd3187bff8cep1ccd6djsneb0d58196aab",
-        "X-RapidAPI-Host": "fragrancefinder-api.p.rapidapi.com"
-    }
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.json().get('dupes', [])
-    else:
-        st.error(f"Failed to retrieve data. Status Code: {response.status_code}")
-        return []
-
-# data utilities
-def extract_unique_options(data, key, default):
-    return sorted(set(perfume.get(key, default) for perfume in data if perfume.get(key)))
+# load the excel file
+df = pd.read_excel("perfumes.xlsx", engine = "openpyxl")
 
 #  UI rendering 
 def render_sidebar_filters(data):
