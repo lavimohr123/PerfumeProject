@@ -54,11 +54,12 @@ def extract_unique_options(data, key, default):
 
 #  UI rendering 
 def render_sidebar_filters(data):
-    st.sidebar.title("🔍 Perfume Finder")
+    st.sidebar.title("Perfume Finder")
     st.sidebar.markdown("### Find Your Perfect Fragrance")
 
     return {
-        'gender': st.sidebar.selectbox("Gender", ["All"] + ["Hello"]),
+        'brand': st.sidebar.selectbox("Brand", ["All"] + extract_unique_options(excel, 'brand')),
+        'gender': st.sidebar.selectbox("Gender", ["All"] + exctract_unique_options(excel, 'gender')),
         'scent': st.sidebar.selectbox("Scent Direction", ["All"] + extract_unique_options(data, 'scent_direction', 'Unknown')),
         'season': st.sidebar.selectbox("Season", ["All"] + extract_unique_options(data, 'season', 'All Year')),
         'occasion': st.sidebar.selectbox("Occasion", ["All"] + extract_unique_options(data, 'occasion', 'Everyday')),
