@@ -47,8 +47,8 @@ def render_sidebar_filters(data):
         'gender': st.sidebar.selectbox("Gender", ["All"] + list(df["gender"].unique())),
         'scent': st.sidebar.selectbox("Scent Direction", ["All"] + list(df["scent"].unique())),
         'season': st.sidebar.selectbox("Season", ["All"] + list(df["season"].unique())),
-        'occasion': st.sidebar.selectbox("Personality", ["All"] + list(df["personality"].unique())),
-        'personality': st.sidebar.selectbox("Occasion", ["All"] + list(df["occasion"].unique())),
+        'personality': st.sidebar.selectbox("Personality", ["All"] + list(df["personality"].unique())),
+        'occasion': st.sidebar.selectbox("Occasion", ["All"] + list(df["occasion"].unique())),
         'price': st.sidebar.selectbox("Price", ["All"] + list(df["price"].unique())),
     }
 
