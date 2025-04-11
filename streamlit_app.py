@@ -35,7 +35,7 @@ def set_background():
     )
 
 # load the excel file
-df = pd.read_csv("Perfumes.csv", sep = ",", index_col=0, usecols = ["brand", "gender"])
+df = pd.read_csv("Perfumes.csv", sep = ",", index_col=0, usecols = ["brand", "gender", "scent_direction", "season", "personality", "occasion", "price"])
 
 #  UI rendering 
 def render_sidebar_filters(data):
