@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 import altair as alt
-import openpyxl
+#import openpyxl
 
 # UI
 def set_background():
