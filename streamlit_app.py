@@ -8,31 +8,31 @@ def set_background():
         """
         <style>
 
-        / Global: Georgia überall /
+        /* Global: Georgia überall */
         html, body, [class*="st-"] {
             font-family: 'Georgia', serif !important;
         }
 
-        / Schriftgrößen /
+        /* Schriftgrößen */
         h1 { font-size: 32px !important; }
         h2 { font-size: 26px !important; }
         h3 { font-size: 22px !important; }
         p, label, div { font-size: 18px !important; }
 
-        / App-Hintergrund /
+        /* App-Hintergrund */
         .stApp {
             background-color: #fffaf0;
             color: #5b3a29;
         }
 
-        / Sidebar Styling /
+        /* Sidebar Styling */
         section[data-testid="stSidebar"] {
             background-color: #f5eeee;
             color: #5b3a29;
             padding-top: 1rem;
         }
 
-        / Sidebar Titel /
+        /* Sidebar Titel */
         section[data-testid="stSidebar"] h1 {
             font-family: 'Georgia', serif !important;
             font-size: 30px !important;
@@ -42,7 +42,7 @@ def set_background():
             margin-bottom: 0.5rem;
         }
 
-        / Sidebar Untertitel /
+        /* Sidebar Untertitel */
         section[data-testid="stSidebar"] h3 {
             font-family: 'Georgia', serif !important;
             font-size: 20px !important;
@@ -53,7 +53,7 @@ def set_background():
             margin-bottom: 1.5rem;
         }
 
-        / Button /
+        /* Button */
         .stButton>button {
             background-color: #d27979;
             color: white;
@@ -68,7 +68,7 @@ def set_background():
             background-color: #8b4513;
         }
 
-        / Header oben (weißer Balken) /
+        /* Header oben (weißer Balken) */
         header[data-testid="stHeader"] {
             background-color: #f8e8dd;
             color: #5b3a29;
