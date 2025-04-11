@@ -35,7 +35,7 @@ def set_background():
     )
 
 # load the excel file
-df = pd.read_excel("perfumes.xlsx", engine = "openpyxl")
+df = pd.read_csv("Perfumes.csv", sep = ",", index_col=0, usecols = ["brand", "gender"])
 
 #  UI rendering 
 def render_sidebar_filters(data):
@@ -43,13 +43,13 @@ def render_sidebar_filters(data):
     st.sidebar.markdown("### Find Your Perfect Fragrance")
 
     return {
-        'brand': st.sidebar.selectbox("Brand", ["All"] + extract_unique_options(excel, 'brand')),
+        'brand': st.sidebar.selectbox("Brand", ["All"] + df["brand"].unique()),
         'gender': st.sidebar.selectbox("Gender", ["All"] + exctract_unique_options(excel, 'gender')),
         'scent': st.sidebar.selectbox("Scent Direction", ["All"] + extract_unique_options(data, 'scent_direction', 'Unknown')),
         'season': st.sidebar.selectbox("Season", ["All"] + extract_unique_options(data, 'season', 'All Year')),
-        'occasion': st.sidebar.selectbox("Occasion", ["All"] + extract_unique_options(data, 'occasion', 'Everyday')),
-        'personality': st.sidebar.selectbox("Personality", ["All"] + extract_unique_options(data, 'personality', 'Classic')),
-        'price': st.sidebar.selectbox("Price Range", ["All"] + extract_unique_options(data, 'price', 'Unknown'))
+        'occasion': st.sidebar.selectbox("Personality", ["All"] + extract_unique_options(data, 'occasion', 'Everyday')),
+        'personality': st.sidebar.selectbox("Occasion", ["All"] + extract_unique_options(data, 'personality', 'Classic')),
+        'price': st.sidebar.selectbox("Price", ["All"] + extract_unique_options(data, 'price', 'Unknown'))
     }
 
 # filters
