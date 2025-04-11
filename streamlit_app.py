@@ -8,52 +8,52 @@ def set_background():
         """
         <style>
 
-        /* Global: Georgia überall */
+        / Global: Georgia überall /
         html, body, [class*="st-"] {
             font-family: 'Georgia', serif !important;
         }
 
-        /* Schriftgrößen */
+        / Schriftgrößen /
         h1 { font-size: 32px !important; }
         h2 { font-size: 26px !important; }
         h3 { font-size: 22px !important; }
         p, label, div { font-size: 18px !important; }
 
-        /* App-Hintergrund */
+        / App-Hintergrund /
         .stApp {
-            background-color: #fff8dc;
-            color: #8b4513;
+            background-color: #fffaf0;
+            color: #5b3a29;
         }
 
-        /* Sidebar Styling */
+        / Sidebar Styling /
         section[data-testid="stSidebar"] {
             background-color: #f5eeee;
-            color: #8b4513;
+            color: #5b3a29;
             padding-top: 1rem;
         }
 
-        /* Sidebar Titel */
+        / Sidebar Titel /
         section[data-testid="stSidebar"] h1 {
             font-family: 'Georgia', serif !important;
             font-size: 30px !important;
-            color: #8b4513 !important;
+            color: #5b3a29 !important;
             letter-spacing: 1px;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        /* Sidebar Untertitel */
+        / Sidebar Untertitel /
         section[data-testid="stSidebar"] h3 {
             font-family: 'Georgia', serif !important;
             font-size: 20px !important;
-            color: #a0522d !important;
+            color: #5b3a29 !important;
             letter-spacing: 0.5px;
             font-weight: 500;
             margin-top: 0;
             margin-bottom: 1.5rem;
         }
 
-        /* Button */
+        / Button /
         .stButton>button {
             background-color: #d27979;
             color: white;
@@ -68,10 +68,10 @@ def set_background():
             background-color: #8b4513;
         }
 
-        /* Header oben (weißer Balken) */
+        / Header oben (weißer Balken) /
         header[data-testid="stHeader"] {
             background-color: #f8e8dd;
-            color: #8b4513;
+            color: #5b3a29;
             border-bottom: 1px solid #d3c5b3;
         }
 
@@ -79,7 +79,6 @@ def set_background():
         """,
         unsafe_allow_html=True
     )
-
 
 # Load the CSV once at the top
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
