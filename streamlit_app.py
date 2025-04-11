@@ -33,7 +33,7 @@ def set_background():
     )
 
 # Load the CSV once at the top
-df = pd.read_csv("Perfumes.csv", sep=",", index_col=0)
+df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")  # Convert to list of dictionaries for filtering
 
 # Sidebar filters
