@@ -7,40 +7,54 @@ def set_background():
     st.markdown(
         """
         <style>
-        /* Apply Georgia font to everything */
+        /* Global Georgia font */
         html, body, [class*="st-"] {
             font-family: 'Georgia', serif !important;
         }
-        
+
+        /* Schriftgrößen */
+        h1 { font-size: 32px !important; }
+        h2 { font-size: 26px !important; }
+        h3 { font-size: 22px !important; }
+        p, label, div { font-size: 18px !important; }
+
+        /* App background + text */
         .stApp {
             background-color: #fff8dc;
             color: #8b4513;
-            font-family: 'Georgia', serif;
         }
 
+        /* Sidebar */
         section[data-testid="stSidebar"] {
             background-color: #f5eeee;
             color: #bc8f8f;
         }
 
+        /* Header */
+        header[data-testid="stHeader"] {
+            background-color: #f8e8dd;
+            color: #8b4513;
+            border-bottom: 1px solid #d3c5b3;
+        }
+
+        /* Button */
         .stButton>button {
-            background-color: #ff4b4b;
+            background-color: #d27979;
             color: white;
             border-radius: 10px;
+            font-size: 18px;
+            padding: 0.6rem 1.2rem;
         }
 
         .stButton>button:hover {
             background-color: #8b4513;
         }
 
-        h3 {
-            color: #8b4513 !important;
-        }
-
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
 # Load the CSV once at the top
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
