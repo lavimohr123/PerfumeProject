@@ -70,7 +70,7 @@ def set_background():
 
         /* Header oben (weißer Balken) */
         header[data-testid="stHeader"] {
-            background-color: #f8e8dd;
+            background-color: #fffaf0;
             color: #5b3a29;
             border-bottom: 1px solid #d3c5b3;
         }
