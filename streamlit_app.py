@@ -43,14 +43,15 @@ def render_sidebar_filters(data):
     st.sidebar.markdown("### Find Your Perfect Fragrance")
 
     return {
-        'brand': st.sidebar.selectbox("Brand", ["All"] + df["brand"].unique()),
-        'gender': st.sidebar.selectbox("Gender", ["All"] + exctract_unique_options(excel, 'gender')),
-        'scent': st.sidebar.selectbox("Scent Direction", ["All"] + extract_unique_options(data, 'scent_direction', 'Unknown')),
-        'season': st.sidebar.selectbox("Season", ["All"] + extract_unique_options(data, 'season', 'All Year')),
-        'occasion': st.sidebar.selectbox("Personality", ["All"] + extract_unique_options(data, 'occasion', 'Everyday')),
-        'personality': st.sidebar.selectbox("Occasion", ["All"] + extract_unique_options(data, 'personality', 'Classic')),
-        'price': st.sidebar.selectbox("Price", ["All"] + extract_unique_options(data, 'price', 'Unknown'))
+        'brand': st.sidebar.selectbox("Brand", ["All"] + list(df["brand"].unique())), #extracting all the non-double brands
+        'gender': st.sidebar.selectbox("Gender", ["All"] + list(df["gender"].unique())),
+        'scent': st.sidebar.selectbox("Scent Direction", ["All"] + list(df["scent"].unique())),
+        'season': st.sidebar.selectbox("Season", ["All"] + list(df["season"].unique())),
+        'occasion': st.sidebar.selectbox("Personality", ["All"] + list(df["personality"].unique())),
+        'personality': st.sidebar.selectbox("Occasion", ["All"] + list(df["occasion"].unique())),
+        'price': st.sidebar.selectbox("Price", ["All"] + list(df["price"].unique())),
     }
+
 
 # filters
 def filter_perfumes(data, filters):
