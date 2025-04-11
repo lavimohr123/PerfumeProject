@@ -8,7 +8,7 @@ def set_background():
         """
         <style>
         .stApp {
-            background-color: white;
+            background-color: lightcoral;
             color: black;
             font-family: 'Arial', sans-serif;
         }
