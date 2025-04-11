@@ -2,32 +2,36 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-
 # UI styling
 def set_background():
     st.markdown(
         """
         <style>
         .stApp {
-            background-color: #ffebcd;
+            background-color: #fff8dc;
             color: #8b4513;
-            font-family: 'Georgia', sans-serif;
+            font-family: 'Georgia', serif;
         }
-        .sidebar .sidebar-content {
+
+        section[data-testid="stSidebar"] {
             background-color: #f5eeee;
             color: #bc8f8f;
         }
+
         .stButton>button {
             background-color: #ff4b4b;
             color: white;
             border-radius: 10px;
         }
+
         .stButton>button:hover {
             background-color: #8b4513;
         }
-        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-            color: #333333;
+
+        h3 {
+            color: #8b4513 !important;
         }
+
         </style>
         """,
         unsafe_allow_html=True
