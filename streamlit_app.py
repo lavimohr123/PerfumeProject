@@ -7,7 +7,8 @@ def set_background():
     st.markdown(
         """
         <style>
-        /* Global Georgia font */
+
+        /* Global: Georgia überall */
         html, body, [class*="st-"] {
             font-family: 'Georgia', serif !important;
         }
@@ -18,23 +19,38 @@ def set_background():
         h3 { font-size: 22px !important; }
         p, label, div { font-size: 18px !important; }
 
-        /* App background + text */
+        /* App-Hintergrund */
         .stApp {
             background-color: #fff8dc;
             color: #8b4513;
         }
 
-        /* Sidebar */
+        /* Sidebar Styling */
         section[data-testid="stSidebar"] {
             background-color: #f5eeee;
-            color: #bc8f8f;
+            color: #8b4513;
+            padding-top: 1rem;
         }
 
-        /* Header */
-        header[data-testid="stHeader"] {
-            background-color: #f8e8dd;
-            color: #8b4513;
-            border-bottom: 1px solid #d3c5b3;
+        /* Sidebar Titel */
+        section[data-testid="stSidebar"] h1 {
+            font-family: 'Georgia', serif !important;
+            font-size: 30px !important;
+            color: #8b4513 !important;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sidebar Untertitel */
+        section[data-testid="stSidebar"] h3 {
+            font-family: 'Georgia', serif !important;
+            font-size: 20px !important;
+            color: #a0522d !important;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
         }
 
         /* Button */
@@ -44,10 +60,19 @@ def set_background():
             border-radius: 10px;
             font-size: 18px;
             padding: 0.6rem 1.2rem;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease;
         }
 
         .stButton>button:hover {
             background-color: #8b4513;
+        }
+
+        /* Header oben (weißer Balken) */
+        header[data-testid="stHeader"] {
+            background-color: #f8e8dd;
+            color: #8b4513;
+            border-bottom: 1px solid #d3c5b3;
         }
 
         </style>
