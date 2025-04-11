@@ -9,9 +9,9 @@ def set_background():
         """
         <style>
         .stApp {
-            background-color: #fff8dc;
-            color: black;
-            font-family: 'Arial', sans-serif;
+            background-color: #ffebcd;
+            color: #8b4513;
+            font-family: 'Georgia', sans-serif;
         }
         .sidebar .sidebar-content {
             background-color: #f5eeee;
@@ -23,7 +23,7 @@ def set_background():
             border-radius: 10px;
         }
         .stButton>button:hover {
-            background-color: #e60000;
+            background-color: #8b4513;
         }
         .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
             color: #333333;
@@ -32,7 +32,6 @@ def set_background():
         """,
         unsafe_allow_html=True
     )
-
 
 # Load the CSV once at the top
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
