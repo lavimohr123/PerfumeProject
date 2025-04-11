@@ -7,6 +7,11 @@ def set_background():
     st.markdown(
         """
         <style>
+        /* Apply Georgia font to everything */
+        html, body, [class*="st-"] {
+            font-family: 'Georgia', serif !important;
+        }
+        
         .stApp {
             background-color: #fff8dc;
             color: #8b4513;
