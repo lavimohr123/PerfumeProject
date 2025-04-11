@@ -2,19 +2,20 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
+
 # UI styling
 def set_background():
     st.markdown(
         """
         <style>
         .stApp {
-            background-color: lightcoral;
+            background-color: #fff8dc;
             color: black;
             font-family: 'Arial', sans-serif;
         }
         .sidebar .sidebar-content {
-            background-color: #f0f0f0;
-            color: black;
+            background-color: #f5eeee;
+            color: #bc8f8f;
         }
         .stButton>button {
             background-color: #ff4b4b;
@@ -31,6 +32,7 @@ def set_background():
         """,
         unsafe_allow_html=True
     )
+
 
 # Load the CSV once at the top
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
