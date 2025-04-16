@@ -73,7 +73,7 @@ def show_intro():
         st.image("Gentleman.jpg", use_container_width=True)
         if st.button("Start Now", key="start"):
             st.session_state.started = True
-            st.experimental_rerun()
+            st.rerun()
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
