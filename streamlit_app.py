@@ -13,6 +13,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+if "started" not in st.session_state:
+    st.session_state.started = False
+
 # define background, font, stylings and colors
 def set_background():
     st.markdown("""
@@ -139,3 +142,5 @@ def main():
         else:
             st.warning("No perfumes match your criteria.")
 
+if __name__ == "__main__":
+    main()
