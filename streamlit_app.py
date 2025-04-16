@@ -55,7 +55,7 @@ def show_intro():
     with col2:
         st.image("bluedechanel.jpg", use_container_width=True)
     with col3:
-        st.image("chanelN5.jpg", use_container_width=True)
+        st.image("Si.jpg", use_container_width=True)
 
     return st.button("Start now")
 
