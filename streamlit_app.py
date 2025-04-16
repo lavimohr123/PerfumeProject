@@ -6,6 +6,9 @@ import altair as alt
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
+# Page configuration
+st.set_page_configuration(page_title="Your Perfect Fragrance", layout="wide", initial_sidebar_state="collapsed")
+
 # define background, font, stylings and colors
 def set_background():
     st.markdown("""
@@ -61,15 +64,15 @@ def show_intro():
         st.image("missdior.jpg", use_container_width=True)
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
-        start_clicked = st.button("Start Now")
+        if st.button("Start Now"):
+            st.session_state.started = True)
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
-        return start_clicked
-
+# Sidebar filters
 def render_sidebar_filters(df):
-    st.sidebar.title("Perfume Finder")
-    st.sidebar.markdown("### Find Your Perfect Fragrance")
+    st.sidebar.title("Your Signature Scent")
+    st.sidebar.markdown("### Matched to yourself")
     return {
         'brand': st.sidebar.selectbox("Brand", ["All"] + list(df["brand"].dropna().unique())),
         'gender': st.sidebar.selectbox("Gender", ["All"] + list(df["gender"].dropna().unique())),
@@ -93,7 +96,7 @@ def filter_perfumes(data, filters):
     ]
 
 def display_results(results):
-    st.markdown("### Matching Perfumes")
+    st.markdown("### Matching Fragrances")
     st.write(f"{len(results)} matches found:")
     for p in results:
         st.markdown(f"**{p.get('name')}** by {p.get('brand')}")
@@ -116,9 +119,13 @@ def display_price_chart(results):
         ).properties(title='Perfume Price Comparison')
         st.altair_chart(chart, use_container_width=True)
 
-def main():
-    set_background()
+set_background()
+if 'started' not in st.session_state:
+    st.session_state.started = False
+
+if not st.session_state.started:
     show_intro()
+else:
     filters = render_sidebar_filters(df)
     if st.sidebar.button('Show Results'):
         result = filter_perfumes(data, filters)
