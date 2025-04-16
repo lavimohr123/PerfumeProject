@@ -49,9 +49,9 @@ def show_intro():
                 Your presence deserves a signature.            
             </p>
             <p style='font-size: 17px; color #5b3a29; max-width: 800px; margin: auto;'>
-                The right scent doesn't just complete a look – it tells a story. 
-                Disover perfumes that express who you are, before you even speak.
-                Curated by its notes, season, and occasion – matched to your personality.
+                The right scent doesn't just complete a look – it tells a story. <br>
+                Disover perfumes that express who you are, before you even speak. <br>
+                Curated by its notes, season, and occasion – matched to your personality. <br>
             </p>
         </div>
     """, unsafe_allow_html=True)
