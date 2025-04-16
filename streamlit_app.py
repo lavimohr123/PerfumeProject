@@ -58,7 +58,7 @@ def set_background():
         </style>
     """, unsafe_allow_html=True)
 
-# define title page, title, intro text, and 3 pictures from downloads
+#define title page with title, intro text, 3 pics, and start now button
 def show_intro():
     st.markdown("""
         <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
@@ -74,7 +74,6 @@ def show_intro():
         </div>
     """, unsafe_allow_html=True)
 
-    # Display images in 3 columns
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -82,14 +81,15 @@ def show_intro():
 
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
-        st.markdown("<div style='text-align: center; margin-top: 1rem;'>", unsafe_allow_html=True)
-        if st.button("Start Now", key="start"):
-            st.session_state.started = True
-            st.experimental_rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+        spacer1, button_col, spacer2 = st.columns([1, 2, 1])
+        with button_col:
+            if st.button("Start Now", key="start"):
+                st.session_state.started = True
+                st.rerun()
 
     with col3:
         st.image("Si.jpg", use_container_width=True)
+
 
 # Sidebar filters
 def render_sidebar_filters(df):
