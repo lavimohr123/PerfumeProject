@@ -64,7 +64,9 @@ def show_intro():
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
-    return st.button("Start now")
+    col_center = st.columns([1, 1, 1])
+    with col_center[1]:
+        return st.button("Start now")
 
 def render_sidebar_filters(df):
     st.sidebar.title("Perfume Finder")
