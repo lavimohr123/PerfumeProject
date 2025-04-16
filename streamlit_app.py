@@ -81,15 +81,23 @@ def show_intro():
 
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
-        st.markdown("""
-            <div style='display: flex; justify-content: center; margin-top: 1rem;'>
-                <button onclick="document.querySelector('button[kind=primary]').click()" style='background-color: #d27979; color: white; border: none; border-radius: 10px; padding: 0.6rem 1.2rem; font-size: 18px; letter-spacing: 0.5px; cursor: pointer;'>Start Now</button>
+    
+        # Centered HTML button
+        clicked = st.markdown("""
+            <div style='text-align: center; margin-top: 1rem;'>
+                <form action='#' method='post'>
+                    <button type='submit' style='background-color: #d27979; color: white; border: none; border-radius: 10px; padding: 0.6rem 1.2rem; font-size: 18px; letter-spacing: 0.5px; cursor: pointer;'>
+                        Start Now
+                    </button>
+                </form>
             </div>
         """, unsafe_allow_html=True)
     
-        if st.button("Hidden Button", key="start", help="hidden", label_visibility="collapsed"):
+        # Hidden Streamlit form to catch click
+        if st.form("start_form", clear_on_submit=True):
             st.session_state.started = True
             st.experimental_rerun()
+
 
     with col3:
         st.image("Si.jpg", use_container_width=True)
