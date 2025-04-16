@@ -130,17 +130,17 @@ def display_price_chart(results):
 def main():
     set_background()
     show_intro()
-    
+
     if st.session_state.get("started"):
         filters = render_sidebar_filters(df)
 
-    if st.sidebar.button('Show Results'):
-        result = filter_perfumes(data, filters)
-        if result:
-            display_results(result)
-            display_price_chart(result)
-        else:
-            st.warning("No perfumes match your criteria.")
+        if st.sidebar.button('Show Results'):
+            result = filter_perfumes(data, filters)
+            if result:
+                display_results(result)
+                display_price_chart(result)
+            else:
+                st.warning("No perfumes match your criteria.")
 
 if __name__ == "__main__":
     main()
