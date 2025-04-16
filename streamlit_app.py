@@ -53,7 +53,7 @@ def show_intro():
     with col1:
         st.image("missdior.jpg", use_container_width=True)
     with col2:
-        st.image("bluedechanel.jpg", use_container_width=True)
+        st.image("Gentleman.jpg", use_container_width=True)
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
