@@ -66,24 +66,30 @@ def show_intro():
             <p style='font-size: 20px; color: #5b3a29; max-width: 800px; margin: auto;'>
                 Your presence deserves a signature. <br><br>            
             </p>
-            <p style='font-size: 17px; color #5b3a29; max-width: 800px; margin: auto;'>
+            <p style='font-size: 17px; color: #5b3a29; max-width: 800px; margin: auto;'>
                 The right scent doesn't just complete a look – it tells a story. <br>
                 Discover fragrances that express who you are, before you even speak. <br>
-                Curated by its notes, season, and occasion – matched to your personality. <br>
+                Curated by its notes, season, and occasion – matched to your personality.
             </p>
         </div>
     """, unsafe_allow_html=True)
 
+    # Display images in 3 columns
     col1, col2, col3 = st.columns(3)
     with col1:
         st.image("missdior.jpg", use_container_width=True)
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
-        if st.button("Start Now", key="start"):
-            st.session_state.started = True
-            st.rerun()
     with col3:
         st.image("Si.jpg", use_container_width=True)
+
+    # Add a fully centered Start button
+    st.markdown("<div style='text-align: center; padding-top: 1rem;'>", unsafe_allow_html=True)
+    if st.button("Start Now", key="start"):
+        st.session_state.started = True
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
 # Sidebar filters
 def render_sidebar_filters(df):
