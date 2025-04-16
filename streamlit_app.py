@@ -2,10 +2,11 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-#dataframe introduction of excel sheet
+# define dataframe to insert and implement excel sheet
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
+# define background, font, stylings and colors
 def set_background():
     st.markdown("""
         <style>
@@ -39,6 +40,7 @@ def set_background():
         </style>
     """, unsafe_allow_html=True)
 
+# define title page, title, intro text, and 3 pictures from downloads
 def show_intro():
     st.markdown("""
         <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
