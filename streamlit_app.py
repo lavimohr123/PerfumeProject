@@ -76,20 +76,20 @@ def show_intro():
 
     # Display images in 3 columns
     col1, col2, col3 = st.columns(3)
+
     with col1:
         st.image("missdior.jpg", use_container_width=True)
+
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
+        st.markdown("<div style='text-align: center; margin-top: 1rem;'>", unsafe_allow_html=True)
+        if st.button("Start Now", key="start"):
+            st.session_state.started = True
+            st.experimental_rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+
     with col3:
         st.image("Si.jpg", use_container_width=True)
-
-    # Add a fully centered Start button
-    st.markdown("<div style='text-align: center; padding-top: 1rem;'>", unsafe_allow_html=True)
-    if st.button("Start Now", key="start"):
-        st.session_state.started = True
-        st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
-
 
 # Sidebar filters
 def render_sidebar_filters(df):
