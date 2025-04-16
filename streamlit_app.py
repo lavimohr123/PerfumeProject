@@ -96,7 +96,7 @@ def show_intro():
         # Hidden Streamlit form to catch click
         if st.form("start_form", clear_on_submit=True):
             st.session_state.started = True
-            st.experimental_rerun()
+            st.rerun()
 
 
     with col3:
