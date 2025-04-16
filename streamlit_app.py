@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
+#dataframe introduction of excel sheet
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
