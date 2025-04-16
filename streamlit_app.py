@@ -2,14 +2,11 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-# Setup
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
-# # Background + base styling
 def set_background():
-    st.markdown(
-        """
+    st.markdown("""
         <style>
         html, body, [class*="st-"] {
             font-family: 'Georgia', serif !important;
@@ -39,11 +36,8 @@ def set_background():
             background-color: #8b4513;
         }
         </style>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
-# # Landing Page Section
 def show_intro():
     st.markdown("""
         <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
@@ -62,20 +56,11 @@ def show_intro():
     with col3:
         st.image("https://i.imgur.com/W6j2gW0.jpg", use_column_width=True)
 
-    st.markdown("<div style='height:40px;'></div>", unsafe_allow_html=True)
+    return st.button("Start now")
 
-    c = st.container()
-    with c:
-        if st.button("Start now"):
-            st.markdown("<a href='#filters' style='text-decoration: none;'></a>", unsafe_allow_html=True)
-            st.markdown("<script>document.location.href='#filters';</script>", unsafe_allow_html=True)
-
-# # Sidebar Filters
 def render_sidebar_filters(df):
-    st.markdown("<h2 id='filters'></h2>", unsafe_allow_html=True)
     st.sidebar.title("Perfume Finder")
     st.sidebar.markdown("### Find Your Perfect Fragrance")
-
     return {
         'brand': st.sidebar.selectbox("Brand", ["All"] + list(df["brand"].dropna().unique())),
         'gender': st.sidebar.selectbox("Gender", ["All"] + list(df["gender"].dropna().unique())),
@@ -86,7 +71,6 @@ def render_sidebar_filters(df):
         'price': st.sidebar.selectbox("Price", ["All"] + list(df["price"].dropna().unique())),
     }
 
-# # Filter Logic
 def filter_perfumes(data, filters):
     return [
         p for p in data
@@ -99,7 +83,6 @@ def filter_perfumes(data, filters):
            (filters['price'] == 'All' or p.get('price') == filters['price'])
     ]
 
-# # Display Results
 def display_results(results):
     st.markdown("### Matching Perfumes")
     st.write(f"{len(results)} matches found:")
@@ -111,7 +94,6 @@ def display_results(results):
         )
         st.markdown("---")
 
-# # Price Chart
 def display_price_chart(results):
     df = pd.DataFrame(results)
     if not df.empty and 'name' in df.columns and 'price' in df.columns:
@@ -125,18 +107,18 @@ def display_price_chart(results):
         ).properties(title='Perfume Price Comparison')
         st.altair_chart(chart, use_container_width=True)
 
-# # Main
 def main():
     set_background()
-    show_intro()
-    filters = render_sidebar_filters(df)
-    if st.sidebar.button('Show Results'):
-        result = filter_perfumes(data, filters)
-        if result:
-            display_results(result)
-            display_price_chart(result)
-        else:
-            st.warning("No perfumes match your criteria.")
+    clicked = show_intro()
+    if clicked:
+        filters = render_sidebar_filters(df)
+        if st.sidebar.button('Show Results'):
+            result = filter_perfumes(data, filters)
+            if result:
+                display_results(result)
+                display_price_chart(result)
+            else:
+                st.warning("No perfumes match your criteria.")
 
 if __name__ == "__main__":
     main()
