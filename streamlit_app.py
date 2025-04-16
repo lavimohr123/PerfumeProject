@@ -118,9 +118,8 @@ def display_price_chart(results):
 
 def main():
     set_background()
-    clicked = show_intro()
-    if clicked:
-        filters = render_sidebar_filters(df)
+    show_intro()
+    render_sidebar_filters(df)
         if st.sidebar.button('Show Results'):
             result = filter_perfumes(data, filters)
             if result:
