@@ -51,11 +51,11 @@ def show_intro():
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("https://i.imgur.com/nV8LrYX.jpg", use_column_width=True)
+        st.image("missdior", use_container_width=True)
     with col2:
-        st.image("https://i.imgur.com/L8fMEcC.jpg", use_column_width=True)
+        st.image("bluedechanel", use_container_width=True)
     with col3:
-        st.image("https://i.imgur.com/W6j2gW0.jpg", use_column_width=True)
+        st.image("chanelN5", use_container_width=True)
 
     return st.button("Start now")
 
