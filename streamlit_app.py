@@ -7,14 +7,22 @@ df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
 # Page configuration
-st.set_page_config(
-    page_title="Your Perfect Fragrance",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
-
 if "started" not in st.session_state:
     st.session_state.started = False
+
+# Set page config based on whether user clicked "Start"
+if not st.session_state.started:
+    st.set_page_config(
+        page_title="Your Perfect Fragrance",
+        layout="wide",
+        initial_sidebar_state="collapsed"
+    )
+else:
+    st.set_page_config(
+        page_title="Your Perfect Fragrance",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
 
 # define background, font, stylings and colors
 def set_background():
