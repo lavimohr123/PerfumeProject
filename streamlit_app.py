@@ -7,7 +7,7 @@ df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
 # Page configuration
-st.set_page_configuration(page_title="Your Perfect Fragrance", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Your Perfect Fragrance", layout="wide", initial_sidebar_state="collapsed")
 
 # define background, font, stylings and colors
 def set_background():
