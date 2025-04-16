@@ -44,13 +44,13 @@ def set_background():
 def show_intro():
     st.markdown("""
         <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
-            <h1 style='font-size: 48px; color: #8b4513;'>Find Your Perfect Perfume</h1>
+            <h1 style='font-size: 48px; color: #8b4513;'>Your Perfect Fragrance</h1>
             <p style='font-size: 20px; color: #5b3a29; max-width: 800px; margin: auto;'>
-                Your presence deserves a signature.            
+                Your presence deserves a signature. <br><br>            
             </p>
             <p style='font-size: 17px; color #5b3a29; max-width: 800px; margin: auto;'>
                 The right scent doesn't just complete a look – it tells a story. <br>
-                Disover perfumes that express who you are, before you even speak. <br>
+                Discover fragrances that express who you are, before you even speak. <br>
                 Curated by its notes, season, and occasion – matched to your personality. <br>
             </p>
         </div>
