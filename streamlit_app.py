@@ -134,6 +134,3 @@ else:
             display_price_chart(result)
         else:
             st.warning("No perfumes match your criteria.")
-
-if __name__ == "__main__":
-    main()
