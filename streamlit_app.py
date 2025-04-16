@@ -65,7 +65,7 @@ def show_intro():
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
         if st.button("Start Now"):
-            st.session_state.started = True)
+            st.session_state.started = True
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
