@@ -7,7 +7,11 @@ df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
 # Page configuration
-st.set_page_config(page_title="Your Perfect Fragrance", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(
+    page_title="Your Perfect Fragrance",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
 # define background, font, stylings and colors
 def set_background():
@@ -64,8 +68,9 @@ def show_intro():
         st.image("missdior.jpg", use_container_width=True)
     with col2:
         st.image("Gentleman.jpg", use_container_width=True)
-        if st.button("Start Now"):
-            st.session_state.started = True
+        if st.button("Start Now", key="start"):
+        st.session_state.started = True
+        st.experimental_rerun()
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
@@ -119,14 +124,13 @@ def display_price_chart(results):
         ).properties(title='Perfume Price Comparison')
         st.altair_chart(chart, use_container_width=True)
 
-set_background()
-if 'started' not in st.session_state:
-    st.session_state.started = False
-
-if not st.session_state.started:
+def main():
+    set_background()
     show_intro()
-else:
-    filters = render_sidebar_filters(df)
+    
+    if st.session_state.get("started"):
+        filters = render_sidebar_filters(df)
+
     if st.sidebar.button('Show Results'):
         result = filter_perfumes(data, filters)
         if result:
@@ -134,3 +138,4 @@ else:
             display_price_chart(result)
         else:
             st.warning("No perfumes match your criteria.")
+
