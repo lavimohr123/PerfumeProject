@@ -80,12 +80,16 @@ def show_intro():
         st.image("missdior.jpg", use_container_width=True)
 
     with col2:
-        st.image("Gentleman.jpg", use_container_width=True)
-        spacer1, button_col, spacer2 = st.columns([1, 2, 1])
-        with button_col:
-            if st.button("Start Now", key="start"):
-                st.session_state.started = True
-                st.rerun()
+    st.image("Gentleman.jpg", use_container_width=True)
+    st.markdown("""
+        <div style='display: flex; justify-content: center; margin-top: 1rem;'>
+            <button onclick="document.querySelector('button[kind=primary]').click()" style='background-color: #d27979; color: white; border: none; border-radius: 10px; padding: 0.6rem 1.2rem; font-size: 18px; letter-spacing: 0.5px; cursor: pointer;'>Start Now</button>
+        </div>
+    """, unsafe_allow_html=True)
+
+    if st.button("Hidden Button", key="start", help="hidden", label_visibility="collapsed"):
+        st.session_state.started = True
+        st.experimental_rerun()
 
     with col3:
         st.image("Si.jpg", use_container_width=True)
