@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
+
+# machine learning: classification (fashionable or non-fashionable), regression (werte besser nicht), und clustering
+# (welche sachen sind ähnlich zu einander, welches parfüm passt zu einem oder welches sind ähnliche die einem auch gefallen könnte, 
+# anhand eines faktores wir könnten mit der datennbank sogar n kriterium machen mit 4 sachen müssen übereinstimmen)
+
 # define dataframe to insert and implement excel sheet
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
