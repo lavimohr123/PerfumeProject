@@ -1,13 +1,9 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+from shop_finder_api import find_shops  # Import shop finder API helper
 
-
-# machine learning: classification (fashionable or non-fashionable), regression (werte besser nicht), und clustering
-# (welche sachen sind ähnlich zu einander, welches parfüm passt zu einem oder welches sind ähnliche die einem auch gefallen könnte, 
-# anhand eines faktores wir könnten mit der datennbank sogar n kriterium machen mit 4 sachen müssen übereinstimmen)
-
-# define dataframe to insert and implement excel sheet
+# Define dataframe to insert and implement excel sheet
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
 
@@ -15,7 +11,6 @@ data = df.to_dict(orient="records")
 if "started" not in st.session_state:
     st.session_state.started = False
 
-# Set page config based on whether user clicked "Start"
 if not st.session_state.started:
     st.set_page_config(
         page_title="Your Perfect Fragrance",
@@ -29,7 +24,7 @@ else:
         initial_sidebar_state="expanded"
     )
 
-# define background, font, stylings and colors
+# Define background, font, stylings and colors
 def set_background():
     st.markdown("""
         <style>
@@ -63,7 +58,7 @@ def set_background():
         </style>
     """, unsafe_allow_html=True)
 
-#define title page with title, intro text, 3 pics, and start now button
+# Define title page with title, intro text, 3 pics, and start now button
 def show_intro():
     st.markdown("""
         <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
@@ -95,7 +90,6 @@ def show_intro():
     with col3:
         st.image("Si.jpg", use_container_width=True)
 
-
 # Sidebar filters
 def render_sidebar_filters(df):
     st.sidebar.title("Your Signature Scent")
@@ -110,6 +104,7 @@ def render_sidebar_filters(df):
         'price': st.sidebar.selectbox("Price", ["All"] + list(df["price"].dropna().unique())),
     }
 
+# Filter perfumes based on sidebar input
 def filter_perfumes(data, filters):
     return [
         p for p in data
@@ -122,23 +117,36 @@ def filter_perfumes(data, filters):
            (filters['price'] == 'All' or p.get('price') == filters['price'])
     ]
 
+# Display results including shop finder button
 def display_results(results):
     st.markdown("### Matching Fragrances")
     st.write(f"{len(results)} matches found:")
     for p in results:
-        st.markdown(f"**{p.get('name')}** by {p.get('brand')}")
-        st.markdown(
-            f"*Gender:* {p.get('gender')} | *Scent:* {p.get('scent_direction')} | *Season:* {p.get('season')}  \n"
-            f"*Occasion:* {p.get('occasion')} | *Personality:* {p.get('personality')} | *Price:* {p.get('price')}"
-        )
-        st.markdown("---")
+        with st.container():
+            st.markdown(f"**{p.get('name')}** by {p.get('brand')}")
+            st.markdown(
+                f"*Gender:* {p.get('gender')} | *Scent:* {p.get('scent_direction')} | *Season:* {p.get('season')}  \n"
+                f"*Occasion:* {p.get('occasion')} | *Personality:* {p.get('personality')} | *Price:* {p.get('price')}"
+            )
 
+            # Find Shops Button
+            if st.button(f"Find Shops for {p.get('name')}", key=f"shop_button_{p.get('name')}"):
+                shops = find_shops(p.get('name'))
+                if shops:
+                    st.success("Shops found nearby:")
+                    for shop in shops:
+                        st.markdown(f"- **{shop['name']}** – {shop['address']}")
+                else:
+                    st.warning("No shops found nearby. Try a different location.")
+            st.markdown("---")
+
+# Display price comparison chart
 def display_price_chart(results):
-    df = pd.DataFrame(results)
-    if not df.empty and 'name' in df.columns and 'price' in df.columns:
-        df = df[['name', 'price']].dropna().sort_values(by='price', ascending=False)
-        df.columns = ['Perfume', 'Price']
-        chart = alt.Chart(df).mark_bar(cornerRadius=10).encode(
+    df_chart = pd.DataFrame(results)
+    if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:
+        df_chart = df_chart[['name', 'price']].dropna().sort_values(by='price', ascending=False)
+        df_chart.columns = ['Perfume', 'Price']
+        chart = alt.Chart(df_chart).mark_bar(cornerRadius=10).encode(
             x='Price',
             y=alt.Y('Perfume', sort='-x'),
             color=alt.value('#ff4b4b'),
@@ -146,12 +154,13 @@ def display_price_chart(results):
         ).properties(title='Perfume Price Comparison')
         st.altair_chart(chart, use_container_width=True)
 
+# Main application logic
 def main():
     set_background()
-    
+
     if not st.session_state.get("started"):
         show_intro()
-        return  # Stop here, don't show sidebar or filters yet
+        return
 
     filters = render_sidebar_filters(df)
 
@@ -165,3 +174,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
