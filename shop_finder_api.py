@@ -3,7 +3,7 @@
 import requests
 
 def find_shops(perfume_name, location="Zurich"):
-    api_key = "AIzaSyBL6VBzyzqNyBnMuoB-aay5SGUQXNUsE2I"  # <-- Replace with your actual Google Places API Key
+    api_key = "AIzaSyBL6VBzyzqNyBnMuoB-aay5SGUQXNUsE2I"   # <-- Replace with your actual Google Places API Key
     search_query = f"{perfume_name} perfume store near {location}"
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={search_query}&key={api_key}"
 
