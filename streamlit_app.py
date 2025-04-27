@@ -7,9 +7,6 @@ import altair as alt
 # (welche sachen sind ähnlich zu einander, welches parfüm passt zu einem oder welches sind ähnliche die einem auch gefallen könnte, 
 # anhand eines faktores wir könnten mit der datennbank sogar n kriterium machen mit 4 sachen müssen übereinstimmen)
 
-AIzaSyBL6VBzyzqNyBnMuoB-aay5SGUQXNUsE2I
-
-
 # define dataframe to insert and implement excel sheet
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 data = df.to_dict(orient="records")
