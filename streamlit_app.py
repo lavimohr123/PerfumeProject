@@ -129,6 +129,8 @@ def display_results(results):
                 f"*Occasion:* {p.get('occasion')} | *Personality:* {p.get('personality')} | *Price:* {p.get('price')}"
             )
 
+           st.write("DEBUG: About to draw a Find Shops button!")
+            
             # Find Shops Button
             if st.button(f"Find Shops for {p.get('name')}", key=f"shop_button_{p.get('name')}"):
                 shops = find_shops(p.get('name'))
