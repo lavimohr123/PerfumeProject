@@ -117,11 +117,11 @@ def filter_perfumes(data, filters):
            (filters['price'] == 'All' or p.get('price') == filters['price'])
     ]
 
-# Display results including shop finder button
 def display_results(results):
     st.markdown("### Matching Fragrances")
     st.write(f"{len(results)} matches found:")
-    for p in results:
+    
+    for idx, p in enumerate(results):
         with st.container():
             st.markdown(f"**{p.get('name')}** by {p.get('brand')}")
             st.markdown(
@@ -129,18 +129,20 @@ def display_results(results):
                 f"*Occasion:* {p.get('occasion')} | *Personality:* {p.get('personality')} | *Price:* {p.get('price')}"
             )
 
-    st.write("DEBUG: About to draw a Find Shops button!")
-            
-    # Find Shops Button
-    if st.button(f"Find Shops for {p.get('name')}", key=f"shop_button_{p.get('name')}"):
-        shops = find_shops(p.get('name'))
-        if shops:
-            st.success("Shops found nearby:")
-            for shop in shops:
-                st.markdown(f"- **{shop['name']}** – {shop['address']}")
-        else:
-            st.warning("No shops found nearby. Try a different location.")
-    st.markdown("---")
+            button_key = f"find_shops_{idx}"
+            if st.button(f"Find Shops for {p.get('name')}", key=button_key):
+                st.session_state[f'shops_{idx}'] = find_shops(p.get('name'))
+
+            if f'shops_{idx}' in st.session_state:
+                shops = st.session_state[f'shops_{idx}']
+                if shops:
+                    st.success("Shops found nearby:")
+                    for shop in shops:
+                        st.markdown(f"- **{shop['name']}** – {shop['address']}")
+                else:
+                    st.warning("No shops found nearby. Try a different location.")
+            st.markdown("---")
+
 
 # Display price comparison chart
 def display_price_chart(results):
