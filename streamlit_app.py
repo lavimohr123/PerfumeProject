@@ -179,23 +179,17 @@ def main():
         else:
             st.warning("No perfumes match your criteria.")
     else:
-        st.markdown("""
-            <div style="text-align: center;">
-                st.image("Gentleman.jpg", width = 300)
-                <h2 style="margin-top: 2rem;">Welcome to Your Perfect Fragrance</h2>
-                <p style="font-size: 18px; max-width: 700px; margin: 1rem auto;">
-                    Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.
-                </p>
-                <p style="font-size: 18px; max-width: 700px; margin: 1rem auto;">
-                    Once you're ready, click <em>Show Results</em> to explore fragrances curated to your personality and mood.
-                </p>
-                <p style="font-size: 18px; max-width: 700px; margin: 1rem auto;">
-                    Not sure what to pick? Start with your favorite brand or season!
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
 
+        with col2:
+            st.image("Gentleman.jpg", width=300)
+            st.markdown("""
+                <h2 style="text-align: center; margin-top: 1rem;">Welcome to Your Perfect Fragrance</h2>
+                <p style="text-align: center; font-size: 18px;">Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.</p>
+                <p style="text-align: center; font-size: 18px;">Once you're ready, click <em>Show Results</em> to explore fragrances curated to your personality and mood.</p>
+                <p style="text-align: center; font-size: 18px;">Not sure what to pick? Start with your favorite brand or season!</p>
+            """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
-
+    
