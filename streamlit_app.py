@@ -182,7 +182,7 @@ def main():
         col1, col2, col3 = st.columns([1, 2, 1])
 
         with col2:
-            st.image("Gentleman.jpg", width=500)
+            st.image("Gentleman.jpg", width=450)
             st.markdown("""
                 <h2 style="text-align: center; margin-top: 1rem;">Welcome to Your Perfect Fragrance</h2>
                 <p style="text-align: center; font-size: 18px;">Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.</p>
