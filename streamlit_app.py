@@ -175,7 +175,17 @@ def main():
             display_price_chart(result)
         else:
             st.warning("No perfumes match your criteria.")
-
+# placeholder for when screen is empty / during selection of features
+    else:
+            st.image("missdior.jpg", width=250)
+            st.markdown("Welcome to Your Perfect Fragrance")
+            st.markdown("""
+            Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.
+    
+            Once you're ready, click _Show Results_ to explore fragrances curated to your personality and mood.
+    
+            Not sure what to pick? Start with your favorite brand or season!
+            """)
 if __name__ == "__main__":
     main()
 
