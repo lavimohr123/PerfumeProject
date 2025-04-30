@@ -95,13 +95,13 @@ def render_sidebar_filters(df):
     st.sidebar.title("Your Signature Scent")
     st.sidebar.markdown("### Matched to yourself")
     return {
-        'brand': st.sidebar.selectbox("Brand", ["All"] + list(df["brand"].dropna().unique())),
-        'gender': st.sidebar.selectbox("Gender", ["All"] + list(df["gender"].dropna().unique())),
-        'scent': st.sidebar.selectbox("Scent", ["All"] + list(df["scent_direction"].dropna().unique())),
-        'season': st.sidebar.selectbox("Season", ["All"] + list(df["season"].dropna().unique())),
-        'personality': st.sidebar.selectbox("Personality", ["All"] + list(df["personality"].dropna().unique())),
-        'occasion': st.sidebar.selectbox("Occasion", ["All"] + list(df["occasion"].dropna().unique())),
-        'price': st.sidebar.selectbox("Price", ["All"] + list(df["price"].dropna().unique())),
+        'brand': st.sidebar.selectbox("Brand", ["All"] + sorted(df["brand"].dropna().unique())),
+        'gender': st.sidebar.selectbox("Gender", ["All"] + sorted(df["gender"].dropna().unique())),
+        'scent': st.sidebar.selectbox("Scent", ["All"] + sorted(df["scent_direction"].dropna().unique())),
+        'season': st.sidebar.selectbox("Season", sorted(df["season"].dropna().unique())),
+        'personality': st.sidebar.selectbox("Personality", ["All"] + sorted(df["personality"].dropna().unique())),
+        'occasion': st.sidebar.selectbox("Occasion", ["All"] + sorted(df["occasion"].dropna().unique())),
+        'price': st.sidebar.selectbox("Price", ["All"] + sorted(df["price"].dropna().unique())),
     }
 
 # Filter perfumes based on sidebar input
