@@ -171,6 +171,12 @@ def main():
 
     filters = render_sidebar_filters(df)
 
+    if "show_results" not in st.session_state:
+        st.session_state["show_results"] = False
+    
+    if st.sidebar.button("Show Results"):
+        st.session_state["show_results"] = True
+    
     if st.session_state.show_results:
         result = filter_perfumes(data, filters)
         if result:
