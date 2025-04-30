@@ -11,6 +11,9 @@ data = df.to_dict(orient="records")
 if "started" not in st.session_state:
     st.session_state.started = False
 
+if "show_results" not in st.session_state:
+    st.session_state.show_results = False
+
 if not st.session_state.started:
     st.set_page_config(
         page_title="Your Perfect Fragrance",
