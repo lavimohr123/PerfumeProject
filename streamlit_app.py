@@ -181,7 +181,7 @@ def main():
     else:
         st.markdown("""
             <div style="text-align: center;">
-                <img src="missdior.jpg" width="300" style="border-radius: 12px;" alt="Perfume bottle">
+                st.image("Gentleman.jpg", width = 300
                 <h2 style="margin-top: 2rem;">Welcome to Your Perfect Fragrance</h2>
                 <p style="font-size: 18px; max-width: 700px; margin: 1rem auto;">
                     Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.
