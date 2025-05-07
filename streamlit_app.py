@@ -120,6 +120,22 @@ def filter_perfumes(data, filters):
            (filters['price'] == 'All' or p.get('price') == filters['price'])
     ]
 
+def get_similar_perfumes_tagmatch(p, max_results=3):
+    signature = {
+        'scent_direction': p.get('scent_direction'), 
+        'season': p.get('season'), 
+        'occation': p.get('gender'), 
+        'personality': p.get('personality')
+    }
+    scored = []
+    for other in data: 
+        if other['name'] == p['name']:
+            continue
+        score = sum(1 for key in signature if other.get(key) == signature[key])
+        scored.append((other, score))
+    top = sorted(scored, key=lambda x: x[1], reverse = True)[:max_results]
+    return [x[0] for x in top]
+
 def display_results(results):
     st.markdown("### Matching Fragrances")
     st.write(f"{len(results)} matches found:")
@@ -145,6 +161,16 @@ def display_results(results):
                 else:
                     st.warning("No shops found nearby. Try a different location.")
             st.markdown("---")
+            
+     similar_key = f"similar_{idx}"
+            if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
+                similar_perfumes = get_similar_perfumes_tagmatch(p)
+                if similar_perfumes:
+                    st.markdown("**You may also like:**")
+                    for sim in similar_perfumes:
+                        st.markdown(f"- * {sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
+                else: 
+                    st.info("No similar perfumes found.")
 
 
 # Display price comparison chart
