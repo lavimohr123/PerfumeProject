@@ -3,9 +3,8 @@ import pandas as pd
 import altair as alt
 from shop_finder_api import find_shops  # Import shop finder API helper
 
-# Define dataframe to insert and implement excel sheet
+# Load perfume data
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
-data = df.to_dict(orient="records")
 
 # Page configuration
 if "started" not in st.session_state:
@@ -64,12 +63,11 @@ def set_background():
 # Define title page with title, intro text, 3 pics, and start now button
 def show_intro():
     st.markdown("""
-        <div style='text-align: center; padding: 3rem 1rem; background-color: #fff4e6;'>
+        <div style='text-align: center;'>
             <h1 style='font-size: 48px; color: #8b4513;'>Your Perfect Fragrance</h1>
-            <p style='font-size: 20px; color: #5b3a29; max-width: 800px; margin: auto;'>
-                Your presence deserves a signature. <br><br>            
+            <p style='font-size: 20px; color: #5b3a29;'>Your presence deserves a signature. <br><br>            
             </p>
-            <p style='font-size: 17px; color: #5b3a29; max-width: 800px; margin: auto;'>
+            <p style='font-size: 17px; color: #5b3a29;'>
                 The right scent doesn't just complete a look – it tells a story. <br>
                 Discover fragrances that express who you are, before you even speak. <br>
                 Curated by its notes, season, and occasion – matched to your personality.
@@ -108,17 +106,25 @@ def render_sidebar_filters(df):
     }
 
 # Filter perfumes based on sidebar input
-def filter_perfumes(data, filters):
-    return [
-        p for p in data
-        if (filters['brand'] == 'All' or p.get('brand') == filters['brand']) and
-           (filters['gender'] == 'All' or p.get('gender') == filters['gender']) and
-           (filters['scent'] == 'All' or p.get('scent_direction') == filters['scent']) and
-           (filters['season'] == 'All' or p.get('season') == filters['season']) and
-           (filters['occasion'] == 'All' or p.get('occasion') == filters['occasion']) and
-           (filters['personality'] == 'All' or p.get('personality') == filters['personality']) and
-           (filters['price'] == 'All' or p.get('price') == filters['price'])
-    ]
+def filter_perfumes(df, filters):
+    filtered = []
+    for _, p in df.iterrows():
+        if filters["brand"] != "All" and p["brand"] != filters ["brand"]:
+            continue
+        if filters["gender"] != "All" and p["gender"] != filters ["gender"]:
+            continue
+        if filters["scent"] != "All" and p["scent"] != filters ["scent"]:
+            continue
+        if filters["season"] != "All" and p["season"] != filters ["season"]:
+            continue
+        if filters["occasion"] != "All" and p["occasion"] != filters ["occasion"]:
+            continue
+        if filters["personality"] != "All" and p["personality"] != filters ["personality"]:
+            continue
+        if filters["price"] != "All" and p["price"] != filters ["price"]:
+            continue
+        filtered.append(p)
+    return filtered
 
 def get_similar_perfumes_tagmatch(p, max_results=3):
     signature = {
@@ -149,7 +155,7 @@ def display_results(results):
             )
 
             button_key = f"find_shops_{idx}"
-            if st.button(f"Find Shops for {p.get('name')}", key=button_key):
+            if st.button(f"Find Shops for {p.get('name')}"):
                 st.session_state[f'shops_{idx}'] = find_shops(p.get('name'))
 
             if f'shops_{idx}' in st.session_state:
