@@ -162,15 +162,15 @@ def display_results(results):
                     st.warning("No shops found nearby. Try a different location.")
             st.markdown("---")
             
-     similar_key = f"similar_{idx}"
-            if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
-                similar_perfumes = get_similar_perfumes_tagmatch(p)
-                if similar_perfumes:
-                    st.markdown("**You may also like:**")
-                    for sim in similar_perfumes:
-                        st.markdown(f"- * {sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
-                else: 
-                    st.info("No similar perfumes found.")
+        similar_key = f"similar_{idx}"
+        if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
+            similar_perfumes = get_similar_perfumes_tagmatch(p)
+            if similar_perfumes:
+                st.markdown("**You may also like:**")
+                for sim in similar_perfumes:
+                    st.markdown(f"- * {sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
+            else: 
+                st.info("No similar perfumes found.")
 
 
 # Display price comparison chart
