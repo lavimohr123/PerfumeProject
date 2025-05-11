@@ -257,8 +257,6 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
             else: 
                 st.info("No similar perfumes found.")
 
-
-
 # Display price comparison chart
 def display_price_chart(results):
      """
@@ -268,17 +266,17 @@ def display_price_chart(results):
         results (list): A list of filtered perfume dictionaries.
     """
 df_chart = pd.DataFrame(results)    # Convert the list of result dictionaries into a pandas DataFrame (each perfume becomes a row)
-    if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:    # Check if the DataFrame is not empty and contains both 'name' and 'price' columns
-    # This ensures that the chart is only generated if valid data is available
-        df_chart = df_chart[['name', 'price']].dropna().sort_values(by='price', ascending=False)    # Keep only the 'name' and 'price' columns for charting and sort in descending order
-        df_chart.columns = ['Perfume', 'Price']    # Rename the columns to more readable labels for the chart display
-        chart = alt.Chart(df_chart).mark_bar(cornerRadius=10).encode(    # Create a horizontal bar chart using Altair; encode() tells Altair how to map data columns to visual elements in the chart
-            x='Price', # X-axis: price values
-            y=alt.Y('Perfume', sort='-x'),    # Y-axis: perfume names (sorted by price descending using '-x')
-            color=alt.value('#d27979'),    # Color: all bars use the same color
-            tooltip=['Perfume', 'Price']    # Tooltip: shows perfume name and price on hover
-        ).properties(title='Perfume Price Comparison')    # sets title to  tell users what the chart represents
-        st.altair_chart(chart, use_container_width=True)    # Render the chart in the Streamlit app, stretching it to the full container widt
+if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:    # Check if the DataFrame is not empty and contains both 'name' and 'price' columns
+# This ensures that the chart is only generated if valid data is available
+    df_chart = df_chart[['name', 'price']].dropna().sort_values(by='price', ascending=False)    # Keep only the 'name' and 'price' columns for charting and sort in descending order
+    df_chart.columns = ['Perfume', 'Price']    # Rename the columns to more readable labels for the chart display
+    chart = alt.Chart(df_chart).mark_bar(cornerRadius=10).encode(    # Create a horizontal bar chart using Altair; encode() tells Altair how to map data columns to visual elements in the chart
+        x='Price', # X-axis: price values
+        y=alt.Y('Perfume', sort='-x'),    # Y-axis: perfume names (sorted by price descending using '-x')
+        color=alt.value('#d27979'),    # Color: all bars use the same color
+        tooltip=['Perfume', 'Price']    # Tooltip: shows perfume name and price on hover
+    ).properties(title='Perfume Price Comparison')    # sets title to  tell users what the chart represents
+    st.altair_chart(chart, use_container_width=True)    # Render the chart in the Streamlit app, stretching it to the full container widt
 
 # Main application logic
 def main():        # is the core function that runs your app’s logic, deciding what content to show at each stage, based on the user’s actions
