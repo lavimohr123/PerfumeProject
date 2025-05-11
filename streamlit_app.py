@@ -175,7 +175,7 @@ def get_similar_perfumes_tagmatch(p, max_results=3):
         'personality': p.get('personality')
     }
     scored = []
-    for other in data: 
+    for _, other in df.iterrows(): 
         if other['name'] == p['name']:
             continue
         score = sum(1 for key in signature if other.get(key) == signature[key])
@@ -264,7 +264,7 @@ def main():        # is the core function that runs your app’s logic, deciding
 
     # If the "Show Results" button was clicked:
     if st.session_state.show_results:
-        result = filter_perfumes(data, filters)    # Apply the filter logic to the perfume dataset using the selected filters
+        result = filter_perfumes(df, filters)    # Apply the filter logic to the perfume dataset using the selected filters
         if result:    # If matching perfumes are found, display them and show a price comparison chart
             display_results(result)
             display_price_chart(result)
