@@ -4,7 +4,9 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from shop_finder_api import find_shops  
+from shop_finder_api import find_shops 
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.neighbors import NearestNeighbors
 
 # Load perfume dataset (in CSV format) using pandas
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
@@ -34,6 +36,26 @@ else:
         initial_sidebar_state="expanded"        # Sidebar is visible after start
     )
 # Once the user clicks "Start Now", the app remembers that with session_state and opens up the full layout with sidebar filters
+
+# Train ML model for perfume similarity
+features = ['brand', 'gender', 'scent_direction', 'season', 'personality', 'occasion', 'price']
+df_filtered = df.dropna(subset=features + ['name'])  # Drop incomplete rows
+encoder = OneHotEncoder()
+X_encoded = encoder.fit_transform(df_filtered[features])  # Convert categorical to binary features
+model_knn = NearestNeighbors(n_neighbors=4, metric='cosine')  # Initialize KNN
+model_knn.fit(X_encoded)  # Train model
+
+# Define function to recommend similar perfumes using ML
+def ml_recommend_similar(perfume):
+    """
+    Recommends similar perfumes using KNN based on scent, season, occasion, personality, and price.
+    """
+    if perfume.get('name') not in df_filtered['name'].values:
+        return []
+    idx = df_filtered[df_filtered['name'] == perfume['name']].index[0]
+    distances, indices = model_knn.kneighbors(X_encoded[idx])
+    similar_indices = indices[0][1:]  # Skip the perfume itself
+    return df_filtered.iloc[similar_indices][['name', 'brand', 'scent_direction']].to_dict(orient='records')
 
 # Define custom function "set_background", which will apply a series of CSS styles to the app
 def set_background():
@@ -194,22 +216,6 @@ def filter_perfumes(df, filters):
         filtered.append(p)    # If none of the filters ruled it out, the perfume is a match and added to the result list
     return filtered    # Return the list of perfumes that matched all active filters
 
-def get_similar_perfumes_tagmatch(p, max_results=3):
-    signature = {
-        'scent_direction': p.get('scent_direction'), 
-        'season': p.get('season'), 
-        'occation': p.get('gender'), 
-        'personality': p.get('personality')
-    }
-    scored = []
-    for other in data: 
-        if other['name'] == p['name']:
-            continue
-        score = sum(1 for key in signature if other.get(key) == signature[key])
-        scored.append((other, score))
-    top = sorted(scored, key=lambda x: x[1], reverse = True)[:max_results]
-    return [x[0] for x in top]
-
 # Define a function that displays a list of perfume matches along with an interactive option (shop finder)
 def display_results(results):    # Takes in 'results', which is a list of perfume dictionaries matching the user's filters
     st.markdown("### Matching Fragrances")    # Print a section title above the results using markdown formattin
@@ -244,17 +250,6 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
             # Draw a horizontal line to separate this perfume result from the next one
             # Helps maintain a clean, structured layout in the app
             st.markdown("---")
-            
-        similar_key = f"similar_{idx}"
-        if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
-            similar_perfumes = get_similar_perfumes_tagmatch(p)
-            if similar_perfumes:
-                st.markdown("**You may also like:**")
-                for sim in similar_perfumes:
-                    st.markdown(f"- * {sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
-            else: 
-                st.info("No similar perfumes found.")
-
 
 # Display price comparison chart
 def display_price_chart(results):
