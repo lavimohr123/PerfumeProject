@@ -5,8 +5,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from shop_finder_api import find_shops 
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.neighbors import NearestNeighbors
 
 # Load perfume dataset (in CSV format) using pandas
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
