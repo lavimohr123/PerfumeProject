@@ -38,6 +38,15 @@ else:
 
 # Define custom function "set_background", which will apply a series of CSS styles to the app
 def set_background():
+    """
+    Renders sidebar dropdown filters based on the perfume dataset.
+
+    Args:
+        df (DataFrame): The DataFrame containing perfume data.
+
+    Returns:
+        dict: A dictionary of selected filter values.
+    """
     # "st.markdown" introduces HTML and CSS into the app 
     # <style> is a container from CSS that gives the app a specific design and layout by telling the browser how to draw each element on the screen
     # styling html and body sets the default font and layout for the entire web page; [class*="st-"] targets every class name with st- to ensure that all streamlit componenets use the style as well
@@ -115,6 +124,15 @@ def show_intro(): # Defined a function called show_intro that when called render
 # Sidebar filters
 def render_sidebar_filters(df):    
 # Defines a function that takes the perfume DataFrame df as input to set up interactive filters in the sidebar and returns selected values as dictionary
+    """
+    Renders sidebar dropdown filters based on the perfume dataset.
+
+    Args:
+        df (DataFrame): The DataFrame containing perfume data.
+
+    Returns:
+        dict: A dictionary of selected filter values.
+    """
     st.sidebar.title("Your Signature Scent")    # Adds title at the top of the sidebar
     st.sidebar.markdown("### Matched to yourself")    # Adds a smaller title below the other to guide the user
     # Returns a dictionary with user-selected filter values from the sidebar
@@ -141,6 +159,16 @@ def render_sidebar_filters(df):
 def filter_perfumes(df, filters):
 # Define a function that filters the perfume dataset based on the selected sidebar filters
 # Takes in two parameters: df (the full DataFrame containing all perfume entries) and filters (a dictionary with user-selected filter values)
+    """
+    Filters the perfume DataFrame based on selected criteria.
+
+    Args:
+        df (DataFrame): The full perfume dataset.
+        filters (dict): Dictionary of user-selected filters.
+
+    Returns:
+        list: A list of filtered perfume rows.
+    """
     filtered = []        # Create empty list to store perfumes that match all selected filters
     for _, p in df.iterrows():    # Loop for each row (perfume) in the DataFrame
         if filters["brand"] != "All" and p["brand"] != filters ["brand"]: 
@@ -231,6 +259,12 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
 
 # Display price comparison chart
 def display_price_chart(results):
+     """
+    Displays a horizontal bar chart comparing perfume prices.
+
+    Args:
+        results (list): A list of filtered perfume dictionaries.
+    """
     df_chart = pd.DataFrame(results)    # Convert the list of result dictionaries into a pandas DataFrame (each perfume becomes a rom)
     if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:    # Check if the DataFrame is not empty and contains both 'name' and 'price' columns
     # This ensures that the chart is only generated if valid data is available
