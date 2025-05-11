@@ -1,33 +1,46 @@
+# Introtext?
+
+# Import different services to build web app, work with tables and data, and create graphs.
 import streamlit as st
 import pandas as pd
 import altair as alt
-from shop_finder_api import find_shops  # Import shop finder API helper
+from shop_finder_api import find_shops  
 
-# Load perfume data
+# Load perfume dataset (in CSV format) using pandas
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
+# Stored in df; uses semicolons as separators due to CSV formatting; utf-8 encoding ensures special characters are read properly
 
-# Page configuration
+# Configure session state variables for app memory
 if "started" not in st.session_state:
-    st.session_state.started = False
+    st.session_state.started = False     #Indicates if the user has clicked "Start Now"
 
 if "show_results" not in st.session_state:
-    st.session_state.show_results = False
+    st.session_state.show_results = False     #Indicates if user has clicked "Show results"
+# These initialize both to False when app is opened to have a clean intro screen
 
+# Set page layout depending on whether app has been started
 if not st.session_state.started:
     st.set_page_config(
-        page_title="Your Perfect Fragrance",
-        layout="wide",
-        initial_sidebar_state="collapsed"
+        page_title="Your Perfect Fragrance",    # Sets title in browser tab
+        layout="wide",                          # Uses wide page layout
+        initial_sidebar_state="collapsed"       # Sidebar is hidden initially
     )
+# Page configuration in initial state with clean intro screen
+
 else:
     st.set_page_config(
-        page_title="Your Perfect Fragrance",
-        layout="wide",
-        initial_sidebar_state="expanded"
+        page_title="Your Perfect Fragrance",    # Same title
+        layout="wide",                          # Same layout
+        initial_sidebar_state="expanded"        # Sidebar is visible after start
     )
+# Once the user clicks "Start Now", the app remembers that with session_state and opens up the full layout with sidebar filters
 
-# Define background, font, stylings and colors
+
+# Define custom function "set_background", which will apply a series of CSS styles to the app
 def set_background():
+    # "st.markdown" introduces HTML and CSS into the app 
+    # <style> is a container from CSS that gives the app a specific design and layout by telling the browser how to draw each element on the screen
+    # styling html and body sets the default font and layout for the entire web page; [class*="st-"] targets every class name with st- to ensure that all streamlit componenets use the style as well
     st.markdown("""
         <style>
         html, body, [class*="st-"] {
@@ -36,7 +49,7 @@ def set_background():
         .stApp {
             background-color: #fffaf0;
             color: #5b3a29;
-        }
+        } 
         section[data-testid="stSidebar"] {
             background-color: #f5eeee;
             color: #5b3a29;
@@ -56,12 +69,15 @@ def set_background():
         }
         .stButton>button:hover {
             background-color: #8b4513;
-        }
+        }  
         </style>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True) #allows raw HTML/CSS to be interpreted (normally restricted for security)
+# Changes font everywhere, sets app background and text colour, styles the sidebar, styles the header, and styles the buttons.
+
 
 # Define title page with title, intro text, 3 pics, and start now button
-def show_intro():
+def show_intro(): # Defined a function called show_intro that when called renders the app's welcome screen
+    # Styles title and intro text displaying a big title and two paragraphs of intro text; injected custom HTML (st.markdown) to gain full control over visual styling and layout
     st.markdown("""
         <div style='text-align: center;'>
             <h1 style='font-size: 48px; color: #8b4513;'>Your Perfect Fragrance</h1>
@@ -74,57 +90,82 @@ def show_intro():
             </p>
         </div>
     """, unsafe_allow_html=True)
+    # Wrap all content inside a div (HTML container) and center all text horizontally
+    # h1 for the main header; p for the paragraphs below; "text-align:center" to position text horizontally in the center
 
+    # Create three columns to divide the screen into three equal vertical sections to have a structure for the images
     col1, col2, col3 = st.columns(3)
+    # st.columns(3) creates a horizontal layout with 3 equally sized columns: col1 (left), col2 (center), col3 (right)
 
-    with col1:
-        st.image("missdior.jpg", use_container_width=True)
+    with col1:        # Creates a context block inside the first column (col1) in which all components will be rendered
+        st.image("missdior.jpg", use_container_width=True)     # use_container_width=True so that the image will stretch to fit the column
     
-    with col2:
-        st.image("Gentleman.jpg", use_container_width=True)
-        col2.markdown("<div style='text-align: center; margin-top: 1rem;'>", unsafe_allow_html=True)
-        if st.button("Start Now", key="start"):
-            st.session_state.started = True
-            st.rerun()
-        col2.markdown("</div>", unsafe_allow_html=True)
+    with col2:        # Creates a context block inside the second column (col2) in which all components will be rendered
+        st.image("Gentleman.jpg", use_container_width=True)    # use_container_width=True so that the image will stretch to fit the column
+        col2.markdown("<div style='text-align: center; margin-top: 1rem;'>", unsafe_allow_html=True)    
+        # Starts a <div> to center-align everything inside it and adds top margin to create spacing above the button
+        if st.button("Start Now", key="start"): # Creates a button labeled "Start Now" which when clicked allows following actions to run:
+            st.session_state.started = True # Sets session state variable "started" to True, allowing the app to show the next screen
+            st.rerun() # Reruns the app to reflect the updated state immediately
+        col2.markdown("</div>", unsafe_allow_html=True) # Closes the centered <div> container after the button)
 
-    with col3:
-        st.image("Si.jpg", use_container_width=True)
+    with col3:        # Creates a context block inside the third column (col3) in which all compoenets will be rendered
+        st.image("Si.jpg", use_container_width=True)           # use_container_width=True so that the image will stretch to fit the column
 
 # Sidebar filters
-def render_sidebar_filters(df):
-    st.sidebar.title("Your Signature Scent")
-    st.sidebar.markdown("### Matched to yourself")
+def render_sidebar_filters(df):    
+# Defines a function that takes the perfume DataFrame df as input to set up interactive filters in the sidebar and returns selected values as dictionary
+    st.sidebar.title("Your Signature Scent")    # Adds title at the top of the sidebar
+    st.sidebar.markdown("### Matched to yourself")    # Adds a smaller title below the other to guide the user
+    # Returns a dictionary with user-selected filter values from the sidebar
     return {
+        # Dropdown for selecting brand; includes "All" plus unique, non-null brands from the dataset
         'brand': st.sidebar.selectbox("Brand", ["All"] + sorted(df["brand"].dropna().unique())),
+        # Dropdown for selecting gender (e.g. Male, Female, Unisex)
         'gender': st.sidebar.selectbox("Gender", ["All"] + sorted(df["gender"].dropna().unique())),
+        # Dropdown for selecting scent direction (e.g. Floral, Woody, etc.)
         'scent': st.sidebar.selectbox("Scent", ["All"] + sorted(df["scent_direction"].dropna().unique())),
+        # Dropdown for selecting suitable season (e.g. Spring, Winter)
         'season': st.sidebar.selectbox("Season", ["All"] + sorted(df["season"].dropna().unique())),
+        # Dropdown for selecting personality match (e.g. Confident, Romantic)
         'personality': st.sidebar.selectbox("Personality", ["All"] + sorted(df["personality"].dropna().unique())),
+        # Dropdown for selecting usage occasion (e.g. Everyday, Formal)
         'occasion': st.sidebar.selectbox("Occasion", ["All"] + sorted(df["occasion"].dropna().unique())),
+        # Dropdown for selecting price level (e.g. Low, High)
         'price': st.sidebar.selectbox("Price", ["All"] + sorted(df["price"].dropna().unique())),
     }
+    # '...' is the name of the box of the dropdown; Selectbox triggers the dropdown for user to select from; 
+    # dropna() removes any rows where the value is missing; unique() assures that value is named only once and not repeated
 
 # Filter perfumes based on sidebar input
 def filter_perfumes(df, filters):
-    filtered = []
-    for _, p in df.iterrows():
-        if filters["brand"] != "All" and p["brand"] != filters ["brand"]:
+# Define a function that filters the perfume dataset based on the selected sidebar filters
+# Takes in two parameters: df (the full DataFrame containing all perfume entries) and filters (a dictionary with user-selected filter values)
+    filtered = []        # Create empty list to store perfumes that match all selected filters
+    for _, p in df.iterrows():    # Loop for each row (perfume) in the DataFrame
+        if filters["brand"] != "All" and p["brand"] != filters ["brand"]: 
             continue
+        # If a a specific brand is selected and the perfume doesn't match, skip it
         if filters["gender"] != "All" and p["gender"] != filters ["gender"]:
             continue
+        # If a specific gender is selected and this perfume doesn't match, skip it
         if filters["scent"] != "All" and p["scent"] != filters ["scent"]:
             continue
+        # If a specific scent is selected and this perfume doesn't match, skip it
         if filters["season"] != "All" and p["season"] != filters ["season"]:
             continue
+        # If a specific season is selected and this perfume doesn't match, skip it
         if filters["occasion"] != "All" and p["occasion"] != filters ["occasion"]:
             continue
+        # If a specific occasion is selected and this perfume doesn't match, skip it
         if filters["personality"] != "All" and p["personality"] != filters ["personality"]:
             continue
+        # If a specific personality is selected and this perfume doesn't match, skip it
         if filters["price"] != "All" and p["price"] != filters ["price"]:
             continue
-        filtered.append(p)
-    return filtered
+        # If a specific price is selected and this perfume doesn't match, skip it
+        filtered.append(p)    # If none of the filters ruled it out, the perfume is a match and added to the result list
+    return filtered    # Return the list of perfumes that matched all active filters
 
 def get_similar_perfumes_tagmatch(p, max_results=3):
     signature = {
@@ -142,29 +183,36 @@ def get_similar_perfumes_tagmatch(p, max_results=3):
     top = sorted(scored, key=lambda x: x[1], reverse = True)[:max_results]
     return [x[0] for x in top]
 
-def display_results(results):
-    st.markdown("### Matching Fragrances")
-    st.write(f"{len(results)} matches found:")
-    
-    for idx, p in enumerate(results):
-        with st.container():
-            st.markdown(f"**{p.get('name')}** by {p.get('brand')}")
+# Define a function that displays a list of perfume matches along with an interactive option (shop finder)
+def display_results(results):    # Takes in 'results', which is a list of perfume dictionaries matching the user's filters
+    st.markdown("### Matching Fragrances")    # Print a section title above the results using markdown formattin
+    st.write(f"{len(results)} matches found:")    # Show the total number of perfumes found based on the applied filters
+    # f"{len(results)} is an f-string used to insert a value inside a string dynamically
+
+    # Loop through each perfume in the results list
+    for idx, p in enumerate(results):    # 'idx' is the index used so that each perfume's buttons, interactions, and saved state are kept separate and uniquely identified in your loop
+        with st.container():    # Group the perfume display content in a Streamlit container for layout separation and visual clarity
+            st.markdown(f"**{p.get('name')}** by {p.get('brand')}")    # Display the perfume's name in bold and the brand next to it
+            # Display perfume attributes in a structured, inline markdown format including gender, scent direction, season, occasion, personality, and price:
             st.markdown(
                 f"*Gender:* {p.get('gender')} | *Scent:* {p.get('scent_direction')} | *Season:* {p.get('season')}  \n"
                 f"*Occasion:* {p.get('occasion')} | *Personality:* {p.get('personality')} | *Price:* {p.get('price')}"
             )
 
-            button_key = f"find_shops_{idx}"
-            if st.button(f"Find Shops for {p.get('name')}"):
-                st.session_state[f'shops_{idx}'] = find_shops(p.get('name'))
+            # Find shops feature connected with API
+            button_key = f"find_shops_{idx}"    # Define a unique key for this perfume's shop-finding button so that each perfume is treated as a separate UI element (for tracking)
+            if st.button(f"Find Shops for {p.get('name')}"):    # A button that, when clicked, triggers a shop-finding function for the perfume
+                st.session_state[f'shops_{idx}'] = find_shops(p.get('name'))    # Call a function that searches for shops selling the perfume and store the result in session state
+                # Session state is used so the result persists across app reruns
 
-            if f'shops_{idx}' in st.session_state:
-                shops = st.session_state[f'shops_{idx}']
-                if shops:
+            if f'shops_{idx}' in st.session_state:   # Check if shop results for this specific perfume (indexed by idx) are stored in session state
+            # This would be True only if the "Find Shops" button was previously clicked
+                shops = st.session_state[f'shops_{idx}']    # Retrieve the shop list for this specific perfume from session state
+                if shops:    # If shops were found, show a green success message
                     st.success("Shops found nearby:")
                     for shop in shops:
                         st.markdown(f"- **{shop['name']}** – {shop['address']}")
-                else:
+                else:    # If no shops were found, display a warning message
                     st.warning("No shops found nearby. Try a different location.")
             st.markdown("---")
             
