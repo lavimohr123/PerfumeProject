@@ -35,7 +35,6 @@ else:
     )
 # Once the user clicks "Start Now", the app remembers that with session_state and opens up the full layout with sidebar filters
 
-
 # Define custom function "set_background", which will apply a series of CSS styles to the app
 def set_background():
     """
