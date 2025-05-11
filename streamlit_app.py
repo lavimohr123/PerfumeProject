@@ -1,4 +1,4 @@
-# Introtext?
+# This code creates a webpage that acts as a perfume finder – matching the perfect perfume to a person based on user-chosen features. 
 
 # Import different services to build web app, work with tables and data, and create graphs.
 import streamlit as st
@@ -213,7 +213,9 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
                     for shop in shops:
                         st.markdown(f"- **{shop['name']}** – {shop['address']}")
                 else:    # If no shops were found, display a warning message
-                    st.warning("No shops found nearby. Try a different location.")
+                    st.warning("No shops found nearby. Try a different location.") 
+            # Draw a horizontal line to separate this perfume result from the next one
+            # Helps maintain a clean, structured layout in the app
             st.markdown("---")
             
         similar_key = f"similar_{idx}"
@@ -229,54 +231,59 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
 
 # Display price comparison chart
 def display_price_chart(results):
-    df_chart = pd.DataFrame(results)
-    if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:
-        df_chart = df_chart[['name', 'price']].dropna().sort_values(by='price', ascending=False)
-        df_chart.columns = ['Perfume', 'Price']
-        chart = alt.Chart(df_chart).mark_bar(cornerRadius=10).encode(
-            x='Price',
-            y=alt.Y('Perfume', sort='-x'),
-            color=alt.value('#ff4b4b'),
-            tooltip=['Perfume', 'Price']
-        ).properties(title='Perfume Price Comparison')
-        st.altair_chart(chart, use_container_width=True)
+    df_chart = pd.DataFrame(results)    # Convert the list of result dictionaries into a pandas DataFrame (each perfume becomes a rom)
+    if not df_chart.empty and 'name' in df_chart.columns and 'price' in df_chart.columns:    # Check if the DataFrame is not empty and contains both 'name' and 'price' columns
+    # This ensures that the chart is only generated if valid data is available
+        df_chart = df_chart[['name', 'price']].dropna().sort_values(by='price', ascending=False)    # Keep only the 'name' and 'price' columns for charting and sort in descending order
+        df_chart.columns = ['Perfume', 'Price']    # Rename the columns to more readable labels for the chart display
+        chart = alt.Chart(df_chart).mark_bar(cornerRadius=10).encode(    # Create a horizontal bar chart using Altair; encode() tells Altair how to map data columns to visual elements in the chart
+            x='Price', # X-axis: price values
+            y=alt.Y('Perfume', sort='-x'),    # Y-axis: perfume names (sorted by price descending using '-x')
+            color=alt.value('#d27979'),    # Color: all bars use the same color
+            tooltip=['Perfume', 'Price']    # Tooltip: shows perfume name and price on hover
+        ).properties(title='Perfume Price Comparison')    # sets title to  tell users what the chart represents
+        st.altair_chart(chart, use_container_width=True)    # Render the chart in the Streamlit app, stretching it to the full container widt
 
 # Main application logic
-def main():
-    set_background()
+def main():        # is the core function that runs your app’s logic, deciding what content to show at each stage, based on the user’s actions
+    set_background()     # Apply the custom CSS background, fonts, and button styling defined earlier
 
-    if not st.session_state.get("started"):
-        show_intro()
-        return
+    if not st.session_state.get("started"):    # Check if the app has been "started" (i.e., if the user has clicked "Start Now"); if not, show the intro screen and exit the function early
+        show_intro()       # Render the intro title, description, and images
+        return             # Exit the function to prevent the rest of the app from running
 
-    filters = render_sidebar_filters(df)
+    filters = render_sidebar_filters(df)    # Render the sidebar filter UI and store the selected filter values
 
-    if "show_results" not in st.session_state:
+    # Initialize the session state flag to control whether results should be shown
+    if "show_results" not in st.session_state:    
         st.session_state["show_results"] = False
-    
-    if st.sidebar.button("Show Results"):
+
+    # Create a "Show Results" button in the sidebar
+    if st.sidebar.button("Show Results"):    # When clicked, sets the session flag to True so filtered results will be displayed
         st.session_state["show_results"] = True
-    
+
+    # If the "Show Results" button was clicked:
     if st.session_state.show_results:
-        result = filter_perfumes(data, filters)
-        if result:
+        result = filter_perfumes(data, filters)    # Apply the filter logic to the perfume dataset using the selected filters
+        if result:    # If matching perfumes are found, display them and show a price comparison chart
             display_results(result)
             display_price_chart(result)
-        else:
+        else:        # If no perfumes match the selected filters, display a warning message
             st.warning("No perfumes match your criteria.")
-    else:
-        col1, col2, col3 = st.columns([1, 2, 1])
+    else:        # If results haven't been requested yet, show an instructional layout with an image and guidance
+        col1, col2, col3 = st.columns([1, 2, 1])        # Create three columns (left = 1, center = 2, right = 1) for centered layout
 
-        with col2:
-            st.image("Gentleman.jpg", width=450)
+        with col2:        # In the center column, display an image and usage instructions
+            st.image("Gentleman.jpg", width=450)        # Show a centered image (acts as a visual welcome)
+            # Display instructional text using custom HTML to center-align and format it
             st.markdown("""
                 <h2 style="text-align: center; margin-top: 1rem;">Welcome to Your Perfect Fragrance</h2>
                 <p style="text-align: center; font-size: 18px;">Use the filters depending on your preferences to sort perfumes by brand, season, occasion, and more.</p>
                 <p style="text-align: center; font-size: 18px;">Once you're ready, click <em>Show Results</em> to explore fragrances curated to your personality and mood.</p>
                 <p style="text-align: center; font-size: 18px;">Not sure what to pick? Start with your favorite brand or season!</p>
-            """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)    # Allow raw HTML formatting
 
-
+# Ensure the main() function runs only when this script is executed directly
+# Prevents the app from running automatically if the file is imported as a module elsewhere
 if __name__ == "__main__":
     main()
-    
