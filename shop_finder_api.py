@@ -2,7 +2,17 @@
 
 import requests        # Import the 'requests' library to handle HTTP requests to external APIs
 
-def find_shops(perfume_name, location="Zurich"):        # Define a function that uses the Google Places API to find shops selling a given perfume near a specified location
+def find_shops(perfume_name, location="Zurich"):
+    """
+    Searches for nearby shops selling a specific perfume using the Google Places API.
+
+    Args:
+        perfume_name (str): The name of the perfume to search for.
+        location (str): The location to search around. Default is 'Zurich'.
+
+    Returns:
+        list: A list of dictionaries with 'name' and 'address' of found shops.
+    """
     api_key = "AIzaSyBL6VBzyzqNyBnMuoB-aay5SGUQXNUsE2I"      # Google Places API key
     search_query = f"{perfume_name} perfume store near {location}"        # Construct a text-based search query combining perfume name and location
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={search_query}&key={api_key}"        # Build the full request URL for the Google Places Text Search API
