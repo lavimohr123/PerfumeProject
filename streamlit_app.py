@@ -10,6 +10,23 @@ from shop_finder_api import find_shops
 df = pd.read_csv("Perfumes.csv", sep=";", encoding="utf-8")
 # Stored in df; uses semicolons as separators due to CSV formatting; utf-8 encoding ensures special characters are read properly
 
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.cluster import KMeans
+
+# Select features for clustering
+cluster_features = ["scent_direction", "season", "occasion", "personality", "gender", "price"]
+
+# Drop rows with missing values in those features
+df_cluster = df.dropna(subset=cluster_features)
+
+# One-hot encode categorical variables
+encoder = OneHotEncoder()
+encoded_features = encoder.fit_transform(df_cluster[cluster_features])
+
+# Apply KMeans clustering
+kmeans = KMeans(n_clusters=5, random_state=42)  # You can experiment with the number of clusters
+df_cluster["cluster"] = kmeans.fit_predict(encoded_features)
+
 # Configure session state variables for app memory
 if "started" not in st.session_state:
     st.session_state.started = False     #Indicates if the user has clicked "Start Now"
@@ -167,21 +184,14 @@ def filter_perfumes(df, filters):
         filtered.append(p)    # If none of the filters ruled it out, the perfume is a match and added to the result list
     return filtered    # Return the list of perfumes that matched all active filters
 
-def get_similar_perfumes_tagmatch(p, max_results=3):
-    signature = {
-        'scent_direction': p.get('scent_direction'), 
-        'season': p.get('season'), 
-        'occation': p.get('gender'), 
-        'personality': p.get('personality')
-    }
-    scored = []
-    for _, other in df.iterrows(): 
-        if other['name'] == p['name']:
-            continue
-        score = sum(1 for key in signature if other.get(key) == signature[key])
-        scored.append((other, score))
-    top = sorted(scored, key=lambda x: x[1], reverse = True)[:max_results]
-    return [x[0] for x in top]
+def get_similar_perfumes_clustered(p, max_results=3):
+    try:
+        cluster = df_cluster[df_cluster["name"] == p["name"]]["cluster"].values[0]
+        similar_perfumes = df_cluster[df_cluster["cluster"] == cluster]
+        similar_perfumes = similar_perfumes[similar_perfumes["name"] != p["name"]]
+        return similar_perfumes.sample(min(len(similar_perfumes), max_results)).to_dict(orient="records")
+    except:
+        return []
 
 # Define a function that displays a list of perfume matches along with an interactive option (shop finder)
 def display_results(results):    # Takes in 'results', which is a list of perfume dictionaries matching the user's filters
@@ -218,15 +228,14 @@ def display_results(results):    # Takes in 'results', which is a list of perfum
             # Helps maintain a clean, structured layout in the app
             st.markdown("---")
             
-        similar_key = f"similar_{idx}"
-        if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
-            similar_perfumes = get_similar_perfumes_tagmatch(p)
-            if similar_perfumes:
-                st.markdown("**You may also like:**")
-                for sim in similar_perfumes:
-                    st.markdown(f"- * {sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
-            else: 
-                st.info("No similar perfumes found.")
+            if st.button(f"Show Similar Scents to {p.get('name')}", key=similar_key):
+                similar_perfumes = get_similar_perfumes_clustered(p)
+                if similar_perfumes:
+                    st.markdown("**You may also like:**")
+                    for sim in similar_perfumes:
+                        st.markdown(f"- *{sim['name']}* by {sim['brand']} ({sim['scent_direction']})")
+                else: 
+                    st.info("No similar perfumes found.")
 
 
 # Display price comparison chart
