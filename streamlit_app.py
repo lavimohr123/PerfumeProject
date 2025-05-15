@@ -111,6 +111,7 @@ def show_intro(): # Defined a function called show_intro that when called render
 
     with col3:        # Creates a context block inside the third column (col3) in which all compoenets will be rendered
         st.image("Si.jpg", use_container_width=True)           # use_container_width=True so that the image will stretch to fit the column
+# all image downloaded from Safari: https://unsplash.com/de/s/fotos/perfume
 
 # Sidebar filters
 def render_sidebar_filters(df):    
@@ -287,3 +288,5 @@ def main():        # is the core function that runs your app’s logic, deciding
 # Prevents the app from running automatically if the file is imported as a module elsewhere
 if __name__ == "__main__":
     main()
+
+# ChatGPT was used as a supplementary tool during the development of this code
