@@ -13,7 +13,7 @@ def find_shops(perfume_name, location="Zurich"):
     Returns:
         list: A list of dictionaries with 'name' and 'address' of found shops.
     """
-    api_key = "AIzaSyBL6VBzyzqNyBnMuoB-aay5SGUQXNUsE2I"      # Google Places API key
+    api_key = ""      # Google Places API key
     search_query = f"{perfume_name} perfume store near {location}"        # Construct a text-based search query combining perfume name and location
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={search_query}&key={api_key}"        # Build the full request URL for the Google Places Text Search API
 
